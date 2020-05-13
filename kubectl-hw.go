@@ -1,9 +1,21 @@
 package main
 
 import (
-	"fmt"
+	"os"
+
+	"github.com/p-tang/first-plugin/cmd"
+	"k8s.io/cli-runtime/pkg/genericclioptions"
 )
 
+var version = "undefined"
+
 func main() {
-	fmt.Println("Hello World!")
+	cmd.SetVersion(version)
+
+	serverVersionCmd := cmd.NewServerVersionCommand(
+		genericclioptions.IOStreams{In: os.Stdin, Out: os.Stdout, ErrOut: os.Stderr})
+
+	if err := serverVersionCmd.Execute(); err != nil {
+		os.Exit(1)
+	}
 }
