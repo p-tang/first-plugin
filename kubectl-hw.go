@@ -7,15 +7,9 @@ import (
 	"k8s.io/cli-runtime/pkg/genericclioptions"
 )
 
-var version = "undefined"
-
 func main() {
-	cmd.SetVersion(version)
-
-	serverVersionCmd := cmd.NewServerVersionCommand(
-		genericclioptions.IOStreams{In: os.Stdin, Out: os.Stdout, ErrOut: os.Stderr})
-
-	if err := serverVersionCmd.Execute(); err != nil {
+	root := cmd.NewCmdVersion(genericclioptions.IOStreams{In: os.Stdin, Out: os.Stdout, ErrOut: os.Stderr})
+	if err := root.Execute(); err != nil {
 		os.Exit(1)
 	}
 }
